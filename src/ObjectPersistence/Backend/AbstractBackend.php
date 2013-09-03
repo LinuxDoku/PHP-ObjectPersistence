@@ -12,5 +12,6 @@ abstract class AbstractBackend {
 	
 	abstract public function save($object);
 	abstract public function get($id);
+	abstract public function getAll();
 	abstract public function delete($id);
 }

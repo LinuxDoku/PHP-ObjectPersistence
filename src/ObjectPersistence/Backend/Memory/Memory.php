@@ -9,6 +9,11 @@ class Memory extends AbstractBackend {
 	public function get($id) {
 		return $this->storage[$id];
 	}
+	
+	public function getAll() {
+		$all = $this->storage;
+		return array_values($all);
+	}	
 
 	public function save($object) {
 		$this->storage[] = clone $object;
@@ -18,5 +23,5 @@ class Memory extends AbstractBackend {
 
 	public function delete($id) {
 		unset($this->storage[$id]);
-	}	
+	}
 }
