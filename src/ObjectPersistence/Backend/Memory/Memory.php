@@ -11,7 +11,7 @@ class Memory extends AbstractBackend {
 	}
 
 	public function save($object) {
-		$this->storage[] = $object;
+		$this->storage[] = clone $object;
 		end($this->storage);
 		return key($this->storage);
 	}

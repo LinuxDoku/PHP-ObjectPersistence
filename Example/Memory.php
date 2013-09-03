@@ -5,17 +5,16 @@ use ObjectPersistence\Backend\Memory\Memory;
 use ObjectPersistence\ObjectPersistence;
 use ObjectPersistence\Settings\Settings;
 
-$settings = new Settings();
-$settings->test = "Hallo Welt";
+$settings = new Settings;
+$settings->test = 'Hello World';
+$settings->sub = new Settings;
+$settings->sub->anotherTest = 'foo';
+$settings->bar = 'lulz';
 
-$objectPersistence = new ObjectPersistence();
-$objectPersistence->setBackend(new Memory());
+$objectPersistence = new ObjectPersistence;
+$objectPersistence->setBackend(new Memory);
 
-$start = microtime(true);
-for($i = 0; $i < 10000; $i++) {
-	$id = $objectPersistence->save($settings);
-	$objectPersistence->get($id);
-}
-
-$end = microtime(true);
-echo $end - $start;
+$id = $objectPersistence->save($settings);
+$settings->sub = null;
+$object = $objectPersistence->get($id);
+print_r($object); // sub is not null, cause the backend clones objects before saving
