@@ -3,6 +3,11 @@ namespace ObjectPersistence\Backend\Memory;
 
 use ObjectPersistence\Backend\AbstractBackend;
 
+/**
+ * Backend implementation to store objects in the local computers memory.
+ * 
+ * The saved data is lost at the scripts end.
+ */
 class Memory extends AbstractBackend {
 	protected $storage = array();
 
@@ -29,7 +34,15 @@ class Memory extends AbstractBackend {
 		$this->storage[$id] = $object;
 	}
 
-	public function delete($id) {
+	public function delete($id=null) {
+		if($id === null)
+			$this->deleteAll();
 		unset($this->storage[$id]);
+	}
+	
+	protected function deleteAll() {
+		foreach($this->get() as $id => $object) {
+			$this->delete($id);
+		}
 	}
 }
