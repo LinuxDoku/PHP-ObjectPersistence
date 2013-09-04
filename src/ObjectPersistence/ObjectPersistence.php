@@ -7,6 +7,7 @@ class ObjectPersistence {
 	protected $backend;
 	protected $middleware;
 	protected $settings;
+	protected $query;
 	
 	public function __construct() {
 		
@@ -20,11 +21,7 @@ class ObjectPersistence {
 		$this->backend = $backend;
 	}
 	
-	public function get($id) {
-		return $this->backend->get($id);
-	}
-	
-	public function save($object) {
-		return $this->backend->save($object);
+	public function __call($name, $parameter) {
+		return call_user_func_array(array($this->backend, $name), $parameter);
 	}
 }

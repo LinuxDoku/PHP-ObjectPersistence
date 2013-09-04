@@ -36,21 +36,21 @@ abstract class AbstractBackend {
 	 * save an object to backend
 	 * 
 	 * @param object $object
-	 * @return mixed access id, return type depends on backend implementation 
+	 * @return int access id, return type depends on backend implementation 
 	 */
 	abstract public function save($object);
 	
 	/**
 	 * get an object from backend or if no id is given get all objects as array
 	 * 
-	 * @param mixed $id identifier of the stored object, if null get all objects
+	 * @param int $id identifier of the stored object, if null get all objects
 	 */
 	abstract public function get($id=null);
 	
 	/**
 	 * update/replace an object at id position
 	 * 
-	 * @param mixed $id storage identifier
+	 * @param int $id storage identifier
 	 * @param object $object new object
 	 */
 	abstract public function update($id, $object);
@@ -58,14 +58,14 @@ abstract class AbstractBackend {
 	/**
 	 * delete an object of storage identifer is given or all if not
 	 * 
-	 * @param mixed $id storage identifier or null to delete all objects
+	 * @param int $id storage identifier or null to delete all objects
 	 */
 	abstract public function delete($id=null);
 	
 	/**
 	 * raise an exeption if it's not an object
 	 * 
-	 * @param mixed $object
+	 * @param int $object
 	 * @throws NonObjectException
 	 */	
 	protected function validateObject($object) {
