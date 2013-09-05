@@ -19,4 +19,4 @@ $settings->sub = null;
 $object = $objectPersistence->get($id);
 print_r($object); // sub is not null, cause the backend clones objects before saving
 
-$objectPersistence->save("");
+$objectPersistence->update(100, new Settings);
