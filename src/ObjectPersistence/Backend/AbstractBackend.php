@@ -43,14 +43,14 @@ abstract class AbstractBackend {
 	/**
 	 * get an object from backend or if no id is given get all objects as array
 	 * 
-	 * @param int $id identifier of the stored object, if null get all objects
+	 * @param string $id identifier of the stored object, if null get all objects
 	 */
 	abstract public function get($id=null);
 	
 	/**
 	 * update/replace an object at id position
 	 * 
-	 * @param int $id storage identifier
+	 * @param string $id storage identifier
 	 * @param object $object new object
 	 */
 	abstract public function update($id, $object);
@@ -58,14 +58,14 @@ abstract class AbstractBackend {
 	/**
 	 * delete an object of storage identifer is given or all if not
 	 * 
-	 * @param int $id storage identifier or null to delete all objects
+	 * @param string $id storage identifier or null to delete all objects
 	 */
 	abstract public function delete($id=null);
 	
 	/**
 	 * raise an exeption if it's not an object
 	 * 
-	 * @param int $object
+	 * @param object $object
 	 * @throws NonObjectException
 	 */	
 	protected function validateObject($object) {

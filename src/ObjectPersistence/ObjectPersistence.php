@@ -23,7 +23,7 @@ class ObjectPersistence {
 	/**
 	 * Settings for our backend, e.g. credentials
 	 *
-	 * @var type 
+	 * @var \ObjectPersistence\Settings\SettingsInterface 
 	 */
 	protected $settings;
 	
