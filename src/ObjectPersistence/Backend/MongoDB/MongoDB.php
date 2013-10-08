@@ -1,7 +1,10 @@
 <?php
 namespace ObjectPersistence\Backend\MongoDB;
 
+use MongoClient;
+use MongoId;
 use ObjectPersistence\Backend\AbstractBackend;
+use ObjectPersistence\Exceptions\NotSavedException;
 
 class MongoDB extends AbstractBackend {
 	protected $mongoDb;
@@ -9,13 +12,13 @@ class MongoDB extends AbstractBackend {
 	protected $collection;
 	
 	public function __construct() {
-		$this->mongoDb = new \MongoClient();
+		$this->mongoDb = new MongoClient();
 		$this->database = $this->mongoDb->ObjectPersistence;
 		$this->collection = $this->database->Objects;
 	}
 	
 	protected function getCriteria($id) {
-		return array('_id' => new \MongoId($id));
+		return array('_id' => new MongoId($id));
 	}
 	
 	public function delete($id = null) {
@@ -32,6 +35,8 @@ class MongoDB extends AbstractBackend {
 		$result = $this->collection->insert($object);
 		if($result['ok'] == true) {
 			return (string)$object['_id'];
+		} else {
+			throw new NotSavedException;
 		}
 	}
 
@@ -39,6 +44,8 @@ class MongoDB extends AbstractBackend {
 		$result = $this->collection->update($this->getCriteria($id), $object);
 		if($result['ok'] == true) {
 			return (string)$object['_id'];
+		} else {
+			throw new NotSavedException;
 		}
 	}	
 }
