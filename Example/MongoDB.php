@@ -6,16 +6,21 @@ echo '<pre>';
 use ObjectPersistence\ObjectPersistence;
 use ObjectPersistence\Settings\Settings;
 
-$settings = array('test' => 'Hello World');
+class Test {
+	
+}
+
+$settings = new \Test;
+$settings->test = 'test';
 
 $objectPersistence = new ObjectPersistence;
 $objectPersistence->setBackend(new \ObjectPersistence\Backend\MongoDB\MongoDB);
 
 $id = $objectPersistence->save($settings);
 
-print_r($objectPersistence->get($id));
+$settings->test2 = 'test2';
 
-$settings['foo'] = 'bar';
+print_r($objectPersistence->get($id));
 
 $objectPersistence->update($id, $settings);
 
