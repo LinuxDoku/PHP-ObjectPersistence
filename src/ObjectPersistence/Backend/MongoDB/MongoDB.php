@@ -27,33 +27,25 @@ class MongoDB extends AbstractBackend {
 
 	public function get($id = null) {
 		$result = $this->collection->findOne($this->getCriteria($id));
-		// remove mongodb _id
-		if(is_array($result))
-			unset($result['_id']);
-		else
-			unset($result->_id);
+		unset($result->_id); // remove mongodb _id
 		return $result;
 	}
 
 	public function save($object) {
+		$this->validateObject($object);
 		$result = $this->collection->insert($object);
 		if($result['ok'] == true) {
-			if(is_array($object))
-				return (string)$object['_id'];
-			else
-				return (string)$object->_id;
+			return (string)$object->_id;
 		} else {
 			throw new NotSavedException;
 		}
 	}
 
 	public function update($id, $object) {
+		$this->validateObject($object);
 		$result = $this->collection->update($this->getCriteria($id), $object);
 		if($result['ok'] == true) {
-			if(is_array($object))
-				return (string)$object['_id'];
-			else
-				return (string)$object->_id;
+			return (string)$object->_id;
 		} else {
 			throw new NotSavedException;
 		}
