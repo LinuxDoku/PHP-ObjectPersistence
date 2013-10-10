@@ -93,11 +93,11 @@ class ObjectPersistence {
 	}
 	
 	protected function getMiddlewareOptions($parameter) {		
-		if($parameter == null)
+		if($parameter == null || !is_array($parameter))
 			return null;
 						
 		$middlewareOptions = $parameter[count($parameter) - 1];
-		if(get_class($middlewareOptions) == 'ObjectPersistence\Middleware\MiddlewareOptions') {
+		if(is_object($middlewareOptions) && get_class($middlewareOptions) == 'ObjectPersistence\Middleware\MiddlewareOptions') {
 			return $middlewareOptions;
 		}
 		

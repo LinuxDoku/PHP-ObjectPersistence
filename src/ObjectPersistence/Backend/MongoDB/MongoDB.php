@@ -15,7 +15,7 @@ class MongoDB extends AbstractBackend {
 	public function __construct(SettingsInterface $settings) {
 		parent::__construct($settings);
 		
-		$this->mongoDb = new MongoClient();
+		$this->mongoDb = new MongoClient($this->settings->server);
 		$this->database = $this->mongoDb->{$this->settings->database};
 		$this->collection = $this->database->{$this->settings->collection};
 	}
