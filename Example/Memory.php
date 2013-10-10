@@ -1,5 +1,5 @@
 <?php
-require '../Autoload/Bootstrap.php';
+require '../vendor/autoload.php';
 
 use ObjectPersistence\Backend\Memory\Memory;
 use ObjectPersistence\ObjectPersistence;

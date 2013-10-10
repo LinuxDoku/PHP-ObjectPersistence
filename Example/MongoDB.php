@@ -1,5 +1,5 @@
 <?php
-require '../Autoload/Bootstrap.php';
+require '../vendor/autoload.php';
 
 echo '<pre>';
 
