@@ -31,7 +31,7 @@ class Memory extends AbstractBackend {
 		$this->validateObject($object);
 		$this->storage[] = clone $object;
 		end($this->storage);
-		return key($this->storage);
+		return (string)key($this->storage);
 	}
 	
 	public function update($id, $object) {
