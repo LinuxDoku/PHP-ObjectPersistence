@@ -2,8 +2,9 @@
 
 use ObjectPersistence\Backend\Memory\Memory;
 use ObjectPersistence\ObjectPersistence;
+use PHPUnit_Framework_TestCase;
 
-class MemoryTest extends \PHPUnit_Framework_TestCase {
+class MemoryTest extends PHPUnit_Framework_TestCase {
 	protected function getObjectPersistenceInstance() {
 		$objectPersistence = new ObjectPersistence;
 		$objectPersistence->setBackend(new Memory);
@@ -19,13 +20,13 @@ class MemoryTest extends \PHPUnit_Framework_TestCase {
 		// save & get
 		$id = $objectPersistence->save($object);
 		$this->assertNotNull($id);
-		$this->assertEquals(serialize($object), serialize($objectPersistence->get($id)));
+		$this->assertEquals($object, $objectPersistence->get($id));
 		$this->assertEquals('bar', $objectPersistence->get($id)->foo);
 		
 		// update & get
 		$object->foo = 'hello world';
 		$objectPersistence->update($id, $object);
-		$this->assertEquals(serialize($object), serialize($objectPersistence->get($id)));
+		$this->assertEquals($object, $objectPersistence->get($id));
 		$this->assertEquals('hello world', $objectPersistence->get($id)->foo);
 		
 		// get more than one result
@@ -49,6 +50,16 @@ class MemoryTest extends \PHPUnit_Framework_TestCase {
 	public function testDateObject() {
 		$objectPersistence = $this->getObjectPersistenceInstance();
 		
+		$object = new DateTime;
 		
+		// save & get
+		$id = $objectPersistence->save($object);
+		$this->assertNotNull($id);
+		$this->assertEquals($object, $objectPersistence->get($id));
+		
+		// update
+		$newObject = new DateTime;
+		$objectPersistence->update($id, $newObject);
+		$this->assertEquals($newObject, $objectPersistence->get($id));
 	}
 }
