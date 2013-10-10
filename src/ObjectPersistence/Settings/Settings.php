@@ -7,7 +7,7 @@ class Settings implements SettingsInterface {
 	protected $settings;
 	
 	public function __construct($settingsArray = null) {
-		if($settingsArray != null) {
+		if($settingsArray !== null) {
 			if(!is_array($settingsArray)) {
 				throw new NonArrayException;
 			}

@@ -25,11 +25,14 @@ class MongoDB extends AbstractBackend {
 	}
 	
 	public function delete($id = null) {
-		$this->collection->remove($this->getCriteria($id));
+		if($id === null)
+			$this->collection->remove();
+		else
+			$this->collection->remove($this->getCriteria($id));
 	}
 
 	public function get($id = null) {
-		if($id != null) {
+		if($id !== null) {
 			$result = (object)$this->collection->findOne($this->getCriteria($id));
 			unset($result->_id); // remove mongodb _id
 		} else {

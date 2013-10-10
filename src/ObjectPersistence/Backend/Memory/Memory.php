@@ -44,17 +44,17 @@ class Memory extends AbstractBackend {
 	}
 
 	public function delete($id=null) {
-		if($id === null)
+		if($id === null) {
 			$this->deleteAll();
-		
-		if(isset($this->storage[$id]))
+		} elseif(isset($this->storage[$id])) {
 			unset($this->storage[$id]);
-		else
+		} else {
 			throw new NotFoundException;
+		}
 	}
 	
 	protected function deleteAll() {
-		foreach($this->get() as $id => $object) {
+		foreach($this->storage as $id => $object) {
 			$this->delete($id);
 		}
 	}
