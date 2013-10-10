@@ -103,13 +103,4 @@ class ObjectPersistence {
 		
 		return null;
 	}
-	
-	protected function isInstancetypeInArray($instance, $array) {
-		foreach($array as $middleware) {
-			if($middleware instanceof $instance) {
-				return true;
-			}
-		}
-		return false;
-	}
 }
