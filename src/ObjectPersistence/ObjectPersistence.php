@@ -20,13 +20,6 @@ class ObjectPersistence {
 	 */
 	protected $middleware;
 	
-	/**
-	 * Settings for our backend, e.g. credentials
-	 *
-	 * @var \ObjectPersistence\Settings\SettingsInterface 
-	 */
-	protected $settings;
-	
 	public function __construct() {
 		
 	}

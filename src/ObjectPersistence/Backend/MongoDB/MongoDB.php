@@ -5,16 +5,19 @@ use MongoClient;
 use MongoId;
 use ObjectPersistence\Backend\AbstractBackend;
 use ObjectPersistence\Exceptions\NotSavedException;
+use ObjectPersistence\Settings\SettingsInterface;
 
 class MongoDB extends AbstractBackend {
 	protected $mongoDb;
 	protected $database;
 	protected $collection;
 	
-	public function __construct() {
+	public function __construct(SettingsInterface $settings) {
+		parent::__construct($settings);
+		
 		$this->mongoDb = new MongoClient();
-		$this->database = $this->mongoDb->ObjectPersistence;
-		$this->collection = $this->database->Objects;
+		$this->database = $this->mongoDb->{$this->settings->database};
+		$this->collection = $this->database->{$this->settings->collection};
 	}
 	
 	protected function getCriteria($id) {
@@ -26,8 +29,16 @@ class MongoDB extends AbstractBackend {
 	}
 
 	public function get($id = null) {
-		$result = $this->collection->findOne($this->getCriteria($id));
-		unset($result->_id); // remove mongodb _id
+		if($id != null) {
+			$result = (object)$this->collection->findOne($this->getCriteria($id))[0];
+			unset($result->_id); // remove mongodb _id
+		} else {
+			$result = array();
+			foreach($this->collection->find() as $obj) {
+				unset($obj['_id']); // remove mongodb _id
+				$result[] = (object)$obj;
+			}
+		}
 		return $result;
 	}
 
