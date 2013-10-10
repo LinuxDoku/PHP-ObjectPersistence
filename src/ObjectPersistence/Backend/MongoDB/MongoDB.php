@@ -30,7 +30,7 @@ class MongoDB extends AbstractBackend {
 
 	public function get($id = null) {
 		if($id != null) {
-			$result = (object)$this->collection->findOne($this->getCriteria($id))[0];
+			$result = (object)$this->collection->findOne($this->getCriteria($id));
 			unset($result->_id); // remove mongodb _id
 		} else {
 			$result = array();

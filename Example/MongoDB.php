@@ -1,8 +1,10 @@
 <?php
+chdir(__DIR__);
 require '../vendor/autoload.php';
 
 use ObjectPersistence\ObjectPersistence;
 use ObjectPersistence\Settings\Settings;
+use ObjectPersistence\Middleware\MiddlewareOptions;
 
 class Test {
 	
@@ -16,5 +18,8 @@ $backendSettings = new Settings(array('database' => 'ObjectPersistence', 'collec
 $objectPersistence = new ObjectPersistence;
 $backend = new \ObjectPersistence\Backend\MongoDB\MongoDB($backendSettings);
 $objectPersistence->setBackend($backend);
+$objectPersistence->addMiddleware(new \ObjectPersistence\Middleware\Cache\Cache);
 
-print_r($objectPersistence->get());
+$id = $objectPersistence->save($settings);
+
+print_r($objectPersistence->get($id, new MiddlewareOptions(array('disabledMiddleware' => array('ObjectPersistence\Middleware\Cache\Cache')))));
