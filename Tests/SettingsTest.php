@@ -1,5 +1,4 @@
 <?php
-namespace ObjectPersistence\Tests;
 
 use ObjectPersistence\Settings\Settings;
 use PHPUnit_Framework_TestCase;
