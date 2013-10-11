@@ -12,7 +12,7 @@ abstract class AbstractBackendImplemtationTest extends PHPUnit_Framework_TestCas
 	
 	abstract function setupBackend();
 	
-	public function testSaveSimple() {
+	final public function testSaveSimple() {
 		$simpleObject = new stdClass;
 		$simpleObject->foo = 'bar';
 		
@@ -27,15 +27,15 @@ abstract class AbstractBackendImplemtationTest extends PHPUnit_Framework_TestCas
 		$this->assertEquals('bar', $this->objectPersistence->get($id)->foo);
 	}
 	
-	public function testGet() {
+	final public function testGet() {
 		
 	}
 	
-	public function testUpdate() {
+	final public function testUpdate() {
 		
 	}
 	
-	public function testDelete() {
+	final public function testDelete() {
 		
 	}
 }
