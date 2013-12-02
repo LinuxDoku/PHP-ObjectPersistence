@@ -2,7 +2,6 @@
 
 use ObjectPersistence\Backend\Memory\Memory;
 use ObjectPersistence\ObjectPersistence;
-use PHPUnit_Framework_TestCase;
 
 class MemoryTest extends PHPUnit_Framework_TestCase {
 	protected function getObjectPersistenceInstance() {

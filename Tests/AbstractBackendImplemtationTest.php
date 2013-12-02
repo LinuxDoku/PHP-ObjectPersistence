@@ -1,29 +1,26 @@
 <?php
-
 use ObjectPersistence\ObjectPersistence;
 
-abstract class AbstractBackendImplemtationTest extends PHPUnit_Framework_TestCase {
-	protected $objectPersistence;
+abstract class AbstractBackendImplemtationTestCase extends PHPUnit_Framework_TestCase {
+	protected static $objectPersistence;
 	
-	public function __construct() {
-		$this->objectPersistence = new ObjectPersistence();
-		$this->setupBackend();
+	public function setUp() {
+		self::$objectPersistence = new ObjectPersistence();
 	}
 	
-	abstract function setupBackend();
-	
 	final private function handleException(Exception $e) {
-		return 'Exception raised while saving simple object, Message: '.$e->getMessage().', Stack Strace:'.PHP_EOL.$e->getTraceAsString();
+		return 'Exception raised while saving simple object, Message: '.$e->getMessage().', Stack Strace: '.PHP_EOL.$e->getTraceAsString();
 	}
 	
 	final public function testSave() {	
 		$id = array();
+		$objectPersistence = self::$objectPersistence;
 		
 		// simple object
 		$simpleObject = new stdClass;
 		$simpleObject->foo = 'bar';
 		try {
-			$id['simpleId'] = $this->objectPersistence->save($simpleObject);
+			$id['simpleId'] = $objectPersistence->save($simpleObject);
 		} catch(Exception $e) {
 			$this->fail($this->handleException($e));
 		}
@@ -31,7 +28,7 @@ abstract class AbstractBackendImplemtationTest extends PHPUnit_Framework_TestCas
 		// date object
 		$dateObject = new DateTime();
 		try {
-			$id['dateId'] = $this->objectPersistence->save($dateObject);
+			$id['dateId'] = $objectPersistence->save($dateObject);
 		} catch(Exception $e) {
 			$this->fail($this->handleException($e));
 		}
@@ -46,41 +43,50 @@ abstract class AbstractBackendImplemtationTest extends PHPUnit_Framework_TestCas
 			return $this->time;
 		};
 		try {
-			$id['complexId'] = $this->objectPersistence->save($complexObject);
+			$id['complexId'] = $objectPersistence->save($complexObject);
 		} catch(Exception $e) {
 			$this->fail($this->handleException($e));
 		}
-		
-		return $id;
+				
+		return array($id, $objectPersistence);
 	}
 	
 	/**
 	 * @depends testSave
 	 */
-	final public function testGet(array $id) {	
+	final public function testGet(array $data) {
+		$id = $data[0];
+		$objectPersistence = $data[1];
+				
 		// check id
 		$this->assertNotNull($id['simpleId']);
 		$this->assertTrue(is_string($id['simpleId']));
 				
 		// check saved value
-		$this->assertEquals($id['simpleId'], $this->objectPersistence->get($id['simpleId']));
-		$this->assertEquals('bar', $this->objectPersistence->get($id['simpleId'])->foo);
+		$this->assertNotNull($objectPersistence->get($id['simpleId']));
+		$this->assertTrue(is_object($objectPersistence->get($id['simpleId'])));
+		$this->assertEquals('bar', $objectPersistence->get($id['simpleId'])->foo);
 				
-		return $id;
+		return array($id, $objectPersistence);
 	}
 	
 	/**
 	 * @depends testGet
 	 */
-	final public function testUpdate(array $id) {
+	final public function testUpdate(array $data) {
+		$id = $data[0];
+		$objectPersistence = $data[1];
 		
-		return $id;
+		return array($id, $objectPersistence);
 	}
 	
 	/**
 	 * @depends testDelete
 	 */
-	final public function testDelete(array $id) {
+	final public function testDelete(array $data) {
+		$id = $data[0];
+		$objectPersistence = $data[1];
+		
 		
 	}
 }
