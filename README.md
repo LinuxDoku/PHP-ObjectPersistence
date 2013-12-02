@@ -3,4 +3,16 @@ A PHP persistence library to store objects on replaceable backends like memory, 
 
 It is mainly developed for the Residata Business Platform but usable in every project via composer.
 
-## Install
+[Packagist](https://packagist.org/packages/linuxdoku/php-objectpersistence)
+
+## Install with composer
+Hack in your terminal:
+```
+composer.phar install linuxdoku/php-objectpersistence
+```
+
+## Run tests
+Run on your terminal:
+```
+./vendor/bin/phpunit -c phpunit.xml
+```
