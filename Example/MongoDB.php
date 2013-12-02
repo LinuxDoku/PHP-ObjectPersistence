@@ -13,7 +13,13 @@ class Test {
 $settings = new \Test;
 $settings->test = 'test';
 
-$backendSettings = new Settings(array('database' => 'ObjectPersistence', 'collection' => 'Storage'));
+$backendSettings = new Settings(
+		array(
+			'server' => 'mongodb://localhost:27017',
+			'database' => 'ObjectPersistence',
+			'collection' => 'Storage'
+		)
+);
 
 $objectPersistence = new ObjectPersistence;
 $backend = new \ObjectPersistence\Backend\MongoDB\MongoDB($backendSettings);

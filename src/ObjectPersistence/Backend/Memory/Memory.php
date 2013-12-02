@@ -15,7 +15,7 @@ class Memory extends AbstractBackend {
 	public function get($id=null) {
 		if($id === null)
 			return $this->getAll();
-		
+								
 		if(isset($this->storage[$id]))
 			return $this->storage[$id];
 		else
