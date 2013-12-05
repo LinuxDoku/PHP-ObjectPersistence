@@ -59,7 +59,10 @@ class MongoDB extends AbstractBackend {
 		$this->validateObject($object);
 		$result = $this->collection->update($this->getCriteria($id), $object);
 		if($result['ok'] == true) {
-			return (string)$object->_id;
+			if($result['_id'] !== null) {
+				unset($result['_id']);
+			}
+			return (string)$id;
 		} else {
 			throw new NotSavedException;
 		}
