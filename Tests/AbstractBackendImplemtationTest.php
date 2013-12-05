@@ -77,6 +77,15 @@ abstract class AbstractBackendImplemtationTestCase extends PHPUnit_Framework_Tes
 		$id = $data[0];
 		$objectPersistence = $data[1];
 		
+		// set new value
+		$simpleObject = new stdClass;
+		$simpleObject->foo = 'test';
+		$objectPersistence->update($id['simpleId'], $simpleObject);
+		
+		// test against new value
+		$this->assertNotNull($objectPersistence->get($id['simpleId']));
+		$this->assertEquals($simpleObject, $objectPersistence->get($id['simpleId']));
+		
 		return array($id, $objectPersistence);
 	}
 	
