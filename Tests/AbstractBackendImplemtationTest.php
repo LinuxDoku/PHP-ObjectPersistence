@@ -96,7 +96,11 @@ abstract class AbstractBackendImplemtationTestCase extends PHPUnit_Framework_Tes
 		$id = $data[0];
 		$objectPersistence = $data[1];
 		
+		// delete
+		$objectPersistence->delete($id['simpleId']);
 		
+		// test if exists
+		$this->assertNull($objectPersistence->get($id['simpleId']));
 	}
 }
 
